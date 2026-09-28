@@ -213,3 +213,29 @@ export const PlayCircleIcon: React.FC<IconProps> = ({ size = 20, className = "",
     <polygon points="10 8 16 12 10 16 10 8" />
   </svg>
 );
+
+export const ArrowRightIcon: React.FC<IconProps> = ({ size = 18, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
+export const StarIcon: React.FC<IconProps> = ({ size = 18, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+export const DockerIcon: React.FC<IconProps> = ({ size = 48, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+    <path d="M42.5 19.5C41.2 18.4 39.5 18 37.8 18.4C37.2 16.5 35.5 15 33.5 15H30.5V18.5H33.5C34.6 18.5 35.5 19.4 35.5 20.5V21.5C33.8 21.1 32.1 21.5 30.8 22.6C29.2 21.3 27 20.5 24.5 20.5C20.5 20.5 17 22.5 15 25.5H10.5C9.4 25.5 8.5 26.4 8.5 27.5V30.5C8.5 35.5 12.5 39.5 17.5 39.5C25.5 39.5 32.5 35.5 35.5 29.5C38.5 29.5 41.5 27.5 43 24.5C43.8 22.8 43.6 20.7 42.5 19.5Z" fill="#0284C7" />
+    <rect x="14" y="16" width="3.5" height="3" rx="0.5" fill="#0284C7" />
+    <rect x="18.5" y="16" width="3.5" height="3" rx="0.5" fill="#0284C7" />
+    <rect x="23" y="16" width="3.5" height="3" rx="0.5" fill="#0284C7" />
+    <rect x="18.5" y="12" width="3.5" height="3" rx="0.5" fill="#0284C7" />
+    <rect x="23" y="12" width="3.5" height="3" rx="0.5" fill="#0284C7" />
+    <rect x="27.5" y="16" width="3.5" height="3" rx="0.5" fill="#0284C7" />
+  </svg>
+);
+
