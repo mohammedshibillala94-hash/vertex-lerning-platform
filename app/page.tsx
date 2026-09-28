@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 import {
   VertexLogo,
   BellOutline,
@@ -41,7 +42,7 @@ export default function HomePage() {
             </nav>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
             <button
               type="button"
               className="p-2 text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] rounded-full transition-colors cursor-pointer"
@@ -49,9 +50,29 @@ export default function HomePage() {
             >
               <BellOutline size={20} />
             </button>
-            <div className="w-8 h-8 rounded-full bg-[#E2E8F0] overflow-hidden border border-[#CBD5E1] shadow-xs cursor-pointer hover:ring-2 hover:ring-[#EA580C]/20 transition-all flex items-center justify-center">
-              <span className="text-xs font-semibold text-[#0F172A]">JS</span>
-            </div>
+            <Show when="signed-out">
+              <div className="flex items-center gap-2">
+                <SignInButton mode="modal">
+                  <button className="px-3.5 py-1.5 text-sm font-medium text-[#0F172A] hover:text-[#EA580C] transition-colors cursor-pointer">
+                    Sign in
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="px-3.5 py-1.5 text-sm font-medium text-white bg-[#EA580C] hover:bg-[#D97706] rounded-lg transition-colors shadow-xs cursor-pointer">
+                    Sign up
+                  </button>
+                </SignUpButton>
+              </div>
+            </Show>
+            <Show when="signed-in">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8 border border-[#CBD5E1]",
+                  },
+                }}
+              />
+            </Show>
           </div>
         </div>
       </header>
