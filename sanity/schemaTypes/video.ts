@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const videoType = defineType({
   name: "video",
@@ -23,9 +23,10 @@ export const videoType = defineType({
       title: "Chapters (Table of Contents)",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "object",
           name: "chapter",
+          title: "Chapter",
           fields: [
             defineField({
               name: "startSeconds",
@@ -54,7 +55,7 @@ export const videoType = defineType({
               };
             },
           },
-        },
+        }),
       ],
     }),
     defineField({
@@ -62,9 +63,10 @@ export const videoType = defineType({
       title: "Transcript Chunks",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "object",
           name: "chunk",
+          title: "Transcript Chunk",
           fields: [
             defineField({
               name: "startSeconds",
@@ -80,7 +82,7 @@ export const videoType = defineType({
               validation: (Rule) => Rule.required(),
             }),
           ],
-        },
+        }),
       ],
     }),
   ],

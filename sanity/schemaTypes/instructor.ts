@@ -32,21 +32,33 @@ export const instructorType = defineType({
     defineField({
       name: "expertise",
       title: "Expertise",
-      type: "string",
-      description: "e.g. Senior Full-Stack Engineer & Cloud Architect",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "List of areas of expertise",
     }),
     defineField({
       name: "bio",
       title: "Bio",
-      type: "text",
-      rows: 4,
+      type: "array",
+      of: [{ type: "block" }],
     }),
   ],
   preview: {
     select: {
       title: "name",
-      subtitle: "expertise",
+      expertise: "expertise",
       media: "photo",
+    },
+    prepare({ title, expertise, media }) {
+      return {
+        title,
+        subtitle: Array.isArray(expertise)
+          ? expertise.join(", ")
+          : typeof expertise === "string"
+          ? expertise
+          : "",
+        media,
+      };
     },
   },
 });

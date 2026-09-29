@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const moduleType = defineType({
   name: "module",
@@ -22,10 +22,10 @@ export const moduleType = defineType({
       title: "Lessons",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "reference",
           to: [{ type: "lesson" }],
-        },
+        }),
       ],
     }),
   ],

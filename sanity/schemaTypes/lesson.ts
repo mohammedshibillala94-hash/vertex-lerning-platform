@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const lessonType = defineType({
   name: "lesson",
@@ -61,18 +61,21 @@ export const lessonType = defineType({
       title: "Lesson Notes (Portable Text)",
       type: "array",
       of: [
-        { type: "block" },
-        {
+        defineArrayMember({ type: "block" }),
+        defineArrayMember({
           type: "image",
           options: { hotspot: true },
-        },
+        }),
       ],
     }),
     defineField({
       name: "keyPoints",
       title: "Key Points",
       type: "array",
-      of: [{ type: "lessonKeyPoint" }],
+      of: [
+        defineArrayMember({ type: "string" }),
+        defineArrayMember({ type: "lessonKeyPoint" }),
+      ],
       description: "In this lesson you will learn points",
     }),
     defineField({
@@ -85,7 +88,7 @@ export const lessonType = defineType({
       name: "resources",
       title: "Resources",
       type: "array",
-      of: [{ type: "lessonResource" }],
+      of: [defineArrayMember({ type: "lessonResource" })],
     }),
   ],
   preview: {

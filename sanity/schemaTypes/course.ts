@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const courseType = defineType({
   name: "course",
@@ -73,7 +73,7 @@ export const courseType = defineType({
       name: "learningOutcomes",
       title: "Learning Outcomes",
       type: "array",
-      of: [{ type: "learningOutcome" }],
+      of: [defineArrayMember({ type: "learningOutcome" })],
     }),
     defineField({
       name: "instructor",
@@ -93,7 +93,7 @@ export const courseType = defineType({
       name: "modules",
       title: "Modules",
       type: "array",
-      of: [{ type: "module" }],
+      of: [defineArrayMember({ type: "module" })],
     }),
   ],
   preview: {
