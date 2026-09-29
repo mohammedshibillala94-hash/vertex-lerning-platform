@@ -64,7 +64,12 @@ export function TextPart(props: TextPartProps) {
   }
 
   return (
-    <ReactMarkdown remarkPlugins={[remarkAgentDirectives]} components={components}>
+    <ReactMarkdown
+      remarkPlugins={[remarkAgentDirectives]}
+      components={components}
+      // Untrusted chat images can leak conversation data through automatic requests.
+      disallowedElements={['img']}
+    >
       {text}
     </ReactMarkdown>
   )
