@@ -10,7 +10,7 @@ export const GET_ALL_COURSES_QUERY = defineQuery(`
     coverImage,
     level,
     price,
-    isPopular,
+    "isPopular": coalesce(popular, isPopular, false),
     studentCount,
     instructor->{
       _id,
@@ -39,7 +39,7 @@ export const GET_COURSE_BY_SLUG_QUERY = defineQuery(`
     coverImage,
     level,
     price,
-    isPopular,
+    "isPopular": coalesce(popular, isPopular, false),
     studentCount,
     learningOutcomes[] {
       icon,
