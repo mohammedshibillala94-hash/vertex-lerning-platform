@@ -1,19 +1,32 @@
 import React from "react";
 import Link from "next/link";
 import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { getAllCourses } from "@/sanity/lib/fetch";
+import { urlFor } from "@/sanity/lib/image";
 import {
   VertexLogo,
   BellOutline,
   SearchOutline,
-  ClockOutline,
   BarChartOutline,
   DocumentOutline,
   ArrowRightIcon,
   StarIcon,
-  DockerIcon,
 } from "./components/Icons";
 
-export default function HomePage() {
+interface SanityCourse {
+  _id: string;
+  title: string;
+  slug: string;
+  summary?: string;
+  coverImage?: unknown;
+  level?: string;
+  moduleCount?: number;
+  totalLessons?: number;
+}
+
+export default async function HomePage() {
+  const courses = ((await getAllCourses()) as unknown as SanityCourse[]) || [];
+
   return (
     <div className="min-h-screen bg-[#FAFAFC] text-[#0F172A] flex flex-col justify-between selection:bg-[#FFEEE5] selection:text-[#EA580C]">
       {/* TOP NAVIGATION */}
@@ -28,7 +41,7 @@ export default function HomePage() {
             </Link>
             <nav className="hidden sm:flex items-center gap-6">
               <Link
-                href="/"
+                href="/courses"
                 className="text-sm font-medium text-[#0F172A] transition-colors hover:text-[#EA580C]"
               >
                 Courses
@@ -143,101 +156,53 @@ export default function HomePage() {
 
           {/* Courses Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Course Card 1 */}
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-xs hover:shadow-md hover:border-[#CBD5E1] transition-all p-6 flex flex-col justify-between space-y-6 group cursor-pointer">
-              <div className="space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#0F172A] text-white font-bold text-2xl flex items-center justify-center shadow-sm">
-                  N
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-serif text-lg font-bold text-[#0F172A] group-hover:text-[#EA580C] transition-colors">
-                    Next.js for Production
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">
-                    Build scalable, high-performance web applications with Next.js.
-                  </p>
-                </div>
-              </div>
+            {courses.length > 0 ? (
+              courses.map((course) => (
+                <Link
+                  key={course._id}
+                  href={`/courses/${course.slug}`}
+                  className="bg-white rounded-2xl border border-[#E2E8F0] shadow-xs hover:shadow-md hover:border-[#CBD5E1] transition-all p-6 flex flex-col justify-between space-y-6 group cursor-pointer"
+                >
+                  <div className="space-y-4">
+                    <div className="w-14 h-14 rounded-2xl bg-[#0F172A] text-white font-bold text-2xl flex items-center justify-center shadow-sm overflow-hidden">
+                      {course.coverImage ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={urlFor(course.coverImage).url()}
+                          alt={course.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span>{course.title.charAt(0)}</span>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="font-serif text-lg font-bold text-[#0F172A] group-hover:text-[#EA580C] transition-colors line-clamp-1">
+                        {course.title}
+                      </h3>
+                      <p className="text-xs text-[#64748B] leading-relaxed line-clamp-2">
+                        {course.summary}
+                      </p>
+                    </div>
+                  </div>
 
-              <div className="pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-[11px] text-[#64748B] font-medium">
-                <div className="flex items-center gap-1.5">
-                  <BarChartOutline size={14} className="text-[#94A3B8]" />
-                  <span>Intermediate</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <ClockOutline size={14} className="text-[#94A3B8]" />
-                  <span>18h 24m</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <DocumentOutline size={14} className="text-[#94A3B8]" />
-                  <span>12 modules</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Course Card 2 */}
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-xs hover:shadow-md hover:border-[#CBD5E1] transition-all p-6 flex flex-col justify-between space-y-6 group cursor-pointer">
-              <div className="space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#E0F2FE] flex items-center justify-center shadow-sm">
-                  <DockerIcon size={36} />
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-serif text-lg font-bold text-[#0F172A] group-hover:text-[#EA580C] transition-colors">
-                    Docker Essentials
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">
-                    Containerize applications and streamline your development workflow.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-[11px] text-[#64748B] font-medium">
-                <div className="flex items-center gap-1.5">
-                  <BarChartOutline size={14} className="text-[#94A3B8]" />
-                  <span>Beginner</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <ClockOutline size={14} className="text-[#94A3B8]" />
-                  <span>10h 12m</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <DocumentOutline size={14} className="text-[#94A3B8]" />
-                  <span>8 modules</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Course Card 3 */}
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-xs hover:shadow-md hover:border-[#CBD5E1] transition-all p-6 flex flex-col justify-between space-y-6 group cursor-pointer">
-              <div className="space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#2563EB] text-white font-bold text-xl flex items-center justify-center shadow-sm">
-                  TS
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-serif text-lg font-bold text-[#0F172A] group-hover:text-[#EA580C] transition-colors">
-                    TypeScript Deep Dive
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">
-                    Go beyond the basics and write safer, more expressive code.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-[11px] text-[#64748B] font-medium">
-                <div className="flex items-center gap-1.5">
-                  <BarChartOutline size={14} className="text-[#94A3B8]" />
-                  <span>Intermediate</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <ClockOutline size={14} className="text-[#94A3B8]" />
-                  <span>14h 36m</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <DocumentOutline size={14} className="text-[#94A3B8]" />
-                  <span>10 modules</span>
-                </div>
-              </div>
-            </div>
+                  <div className="pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-[11px] text-[#64748B] font-medium">
+                    <div className="flex items-center gap-1.5">
+                      <BarChartOutline size={14} className="text-[#94A3B8]" />
+                      <span>{course.level || "Intermediate"}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <DocumentOutline size={14} className="text-[#94A3B8]" />
+                      <span>{course.moduleCount || 0} modules</span>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p className="text-sm text-[#64748B] col-span-3 py-8 text-center">
+                No courses found in dataset.
+              </p>
+            )}
           </div>
         </section>
 
