@@ -69,7 +69,7 @@ export const GET_COURSE_BY_SLUG_QUERY = defineQuery(`
         "slug": slug.current,
         videoUrl,
         duration,
-        isFreePreview,
+        "isFreePreview": coalesce(freePreview, isFreePreview, false),
         studentCount
       }
     }

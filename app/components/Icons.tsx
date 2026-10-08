@@ -239,3 +239,45 @@ export const DockerIcon: React.FC<IconProps> = ({ size = 48, className = "", ...
   </svg>
 );
 
+export const LayersIcon: React.FC<IconProps> = ({ size = 24, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </svg>
+);
+
+export const DatabaseIcon: React.FC<IconProps> = ({ size = 24, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+  </svg>
+);
+
+export const SpeedometerIcon: React.FC<IconProps> = ({ size = 24, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M12 2a10 10 0 0 0-10 10c0 4.14 2.5 7.7 6.1 9.2a.5.5 0 0 0 .5-.1l.3-.3a.5.5 0 0 0 0-.6A8 8 0 1 1 20 12" />
+    <circle cx="12" cy="12" r="2" />
+    <path d="M12 12l4.5-4.5" />
+  </svg>
+);
+
+export const CloudIcon: React.FC<IconProps> = ({ size = 24, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M17.5 19A5.5 5.5 0 0 0 18 8h-1.26A8 8 0 1 0 3 16.3" />
+  </svg>
+);
+
+export const WorkflowIcon: React.FC<IconProps> = ({ size = 24, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <rect x="3" y="3" width="6" height="6" rx="1" />
+    <rect x="15" y="3" width="6" height="6" rx="1" />
+    <rect x="9" y="15" width="6" height="6" rx="1" />
+    <path d="M6 9v3a1 1 0 0 0 1 1h5" />
+    <path d="M18 9v3a1 1 0 0 1-1 1h-5" />
+    <path d="M12 13v2" />
+  </svg>
+);
+
+
