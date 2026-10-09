@@ -11,7 +11,6 @@ import {
   ClockOutline,
   DocumentOutline,
   UserOutline,
-  ArrowRightIcon,
   BookmarkOutline,
   ChevronRightOutline,
   LayersIcon,
@@ -26,7 +25,10 @@ import {
   LessonItem,
 } from "@/app/components/CourseContentAccordion";
 import { formatDuration } from "@/app/utils";
-import { FloatingProgressBanner } from "@/app/components/FloatingProgressBanner";
+import {
+  CourseLearningStartLink,
+  FloatingProgressBanner,
+} from "@/app/components/FloatingProgressBanner";
 
 interface CoursePageProps {
   params: Promise<{
@@ -246,13 +248,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
 
             {/* Action CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link
-                href={firstLessonSlug ? `/lessons/${firstLessonSlug}` : "#"}
-                className="inline-flex items-center gap-2 px-6 h-12 rounded-xl bg-[#EA580C] hover:bg-[#D97706] text-white font-medium text-sm shadow-md shadow-[#EA580C]/15 transition-all cursor-pointer"
-              >
-                <span>Continue Learning</span>
-                <ArrowRightIcon size={16} />
-              </Link>
+              <CourseLearningStartLink firstLessonSlug={firstLessonSlug} />
 
               <button
                 type="button"

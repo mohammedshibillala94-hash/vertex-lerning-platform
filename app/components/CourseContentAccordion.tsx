@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import posthog from "posthog-js";
 import { ChevronDownIcon, PlayCircleIcon, LockIcon } from "./Icons";
 import { formatDuration } from "@/app/utils";
 
@@ -36,9 +37,29 @@ export function CourseContentAccordion({
   const [showAll, setShowAll] = useState(false);
 
   const toggleModule = (index: number) => {
+    const isExpanded = !openIndexes.includes(index);
+
+    posthog.capture("course_module_toggled", {
+      module_index: index + 1,
+      lesson_count: modules[index]?.lessons?.length ?? 0,
+      is_expanded: isExpanded,
+    });
+
     setOpenIndexes((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
+  };
+
+  const toggleShowAll = () => {
+    const isExpanding = !showAll;
+    setShowAll(isExpanding);
+
+    if (isExpanding) {
+      posthog.capture("course_content_expanded", {
+        total_module_count: modules.length,
+        initial_visible_module_count: initialVisibleCount,
+      });
+    }
   };
 
   const visibleModules = showAll ? modules : modules.slice(0, initialVisibleCount);
@@ -101,6 +122,13 @@ export function CourseContentAccordion({
                     <Link
                       key={lesson._id}
                       href={`/lessons/${lesson.slug}`}
+                      onClick={() =>
+                        posthog.capture("course_lesson_selected", {
+                          lesson_slug: lesson.slug,
+                          duration_seconds: lesson.duration ?? 0,
+                          is_free_preview: Boolean(lesson.isFreePreview),
+                        })
+                      }
                       className="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-[#F1F5F9]/60 transition-colors group"
                     >
                       <div className="flex items-center gap-3 min-w-0">
@@ -139,7 +167,7 @@ export function CourseContentAccordion({
         <div className="flex justify-center pt-2">
           <button
             type="button"
-            onClick={() => setShowAll(!showAll)}
+            onClick={toggleShowAll}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#E2E8F0] bg-white text-xs font-medium text-[#0F172A] hover:bg-[#F8FAFC] transition-colors shadow-2xs cursor-pointer"
           >
             <span>

@@ -1,4 +1,7 @@
 import "server-only";
+import { SeverityNumber } from "@opentelemetry/api-logs";
+import { after } from "next/server";
+import { emitPostHogLog, flushPostHogLogs } from "@/instrumentation";
 import { client, serverClient } from "./client";
 import {
   GET_ALL_COURSES_QUERY,
@@ -10,6 +13,14 @@ import {
 } from "./queries";
 
 type SanityDoc = Record<string, unknown>;
+
+function logCourseRead(
+  body: string,
+  attributes: Record<string, string | number | boolean>
+) {
+  emitPostHogLog({ body, severityNumber: SeverityNumber.INFO, attributes });
+  after(flushPostHogLogs);
+}
 
 async function safeFetch<T = SanityDoc>(
   query: string,
@@ -32,13 +43,20 @@ async function safeFetch<T = SanityDoc>(
 }
 
 export async function getAllCourses(): Promise<Record<string, unknown>[]> {
-  return (
+  const courses =
     (await safeFetch<Record<string, unknown>[]>(
       GET_ALL_COURSES_QUERY,
       {},
       { next: { tags: ["courses", "catalog"], revalidate: 60 } }
-    )) || []
-  );
+    )) || [];
+
+  logCourseRead("course catalog loaded", {
+    operation: "course_catalog_load",
+    source: "sanity",
+    result_count: courses.length,
+  });
+
+  return courses;
 }
 
 export async function getCourseBySlug(
@@ -57,14 +75,30 @@ export async function getCourseBySlug(
     if (allCourses && allCourses.length > 0) {
       const match = allCourses.find((c) => c.slug === slug) || allCourses[0];
       if (match?.slug) {
-        return await safeFetch<Record<string, unknown> | null>(
+        const fallbackResult = await safeFetch<Record<string, unknown> | null>(
           GET_COURSE_BY_SLUG_QUERY,
           { slug: match.slug },
           { next: { tags: ["course", `course:${match.slug}`], revalidate: 60 } }
         );
+
+        logCourseRead("course lookup completed", {
+          operation: "course_lookup",
+          source: "sanity",
+          resolution: "fallback",
+          outcome: fallbackResult ? "found" : "not_found",
+        });
+
+        return fallbackResult;
       }
     }
   }
+
+  logCourseRead("course lookup completed", {
+    operation: "course_lookup",
+    source: "sanity",
+    resolution: "requested",
+    outcome: result ? "found" : "not_found",
+  });
 
   return result;
 }
