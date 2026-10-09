@@ -125,18 +125,27 @@ export default async function HomePage() {
 
           {/* Intelligent Search Input Bar */}
           <div className="w-full max-w-2xl pt-4">
-            <div className="relative flex items-center bg-white rounded-2xl border border-[#E2E8F0] shadow-sm hover:border-[#CBD5E1] focus-within:border-[#EA580C] focus-within:ring-2 focus-within:ring-[#EA580C]/20 transition-all px-4 h-14">
+            <form
+              action="/search"
+              method="GET"
+              className="relative flex items-center bg-white rounded-2xl border border-[#E2E8F0] shadow-sm hover:border-[#CBD5E1] focus-within:border-[#EA580C] focus-within:ring-2 focus-within:ring-[#EA580C]/20 transition-all px-4 h-14"
+            >
               <SearchOutline size={20} className="text-[#64748B] mr-3 shrink-0" />
               <input
                 type="text"
-                placeholder="Ask anything about your learning..."
+                name="q"
+                placeholder="Ask anything about your learning (e.g. data fetching, caching)..."
                 className="w-full text-sm text-[#0F172A] placeholder-[#94A3B8] bg-transparent focus:outline-none font-sans"
               />
-              <div className="px-2 py-1 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[11px] font-mono text-[#64748B] shrink-0 ml-2 select-none">
-                ⌘ K
-              </div>
-            </div>
+              <button
+                type="submit"
+                className="px-3.5 py-1.5 rounded-lg bg-[#EA580C] hover:bg-[#D97706] text-white text-xs font-semibold shrink-0 ml-2 transition-colors cursor-pointer"
+              >
+                Search
+              </button>
+            </form>
           </div>
+
         </section>
 
         {/* ALL COURSES SECTION */}

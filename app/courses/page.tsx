@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 import { getAllCourses } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
+import { HeaderSearchInput } from "@/app/components/HeaderSearchInput";
 import {
   VertexLogo,
   BellOutline,
@@ -28,18 +29,18 @@ export default async function CatalogPage() {
     <div className="min-h-screen bg-[#FAFAFC] text-[#0F172A] flex flex-col justify-between selection:bg-[#FFEEE5] selection:text-[#EA580C]">
       {/* TOP NAVIGATION */}
       <header className="w-full border-b border-[#E2E8F0]/60 bg-[#FAFAFC]/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-8 min-w-0">
             <Link
               href="/"
-              className="flex items-center gap-2.5 transition-opacity hover:opacity-90"
+              className="flex items-center gap-2.5 transition-opacity hover:opacity-90 shrink-0"
             >
               <VertexLogo size={28} />
               <span className="font-sans font-bold text-xl tracking-tight text-[#0F172A]">
                 Vertex
               </span>
             </Link>
-            <nav className="hidden sm:flex items-center gap-6">
+            <nav className="hidden sm:flex items-center gap-6 shrink-0">
               <Link
                 href="/courses"
                 className="text-sm font-medium text-[#0F172A] transition-colors hover:text-[#EA580C]"
@@ -55,9 +56,12 @@ export default async function CatalogPage() {
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-1 justify-end max-w-xl">
+            <HeaderSearchInput className="hidden sm:flex" />
+
             <button
               type="button"
+
               className="p-2 text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9] rounded-full transition-colors cursor-pointer"
               aria-label="Notifications"
             >

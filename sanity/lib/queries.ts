@@ -170,3 +170,87 @@ export const GET_ALL_CATEGORIES_QUERY = defineQuery(`
     "courseCount": count(*[_type == "course" && references(^._id)])
   }
 `);
+
+// Search Lessons Query
+export const SEARCH_LESSONS_QUERY = defineQuery(`
+  *[_type == "lesson" && (
+    title match $term ||
+    keyPoints[] match $term ||
+    pt::text(notes) match $term ||
+    proTip match $term
+  )] {
+    _id,
+    title,
+    "slug": slug.current,
+    videoUrl,
+    duration,
+    studentCount,
+    keyPoints,
+    proTip,
+    "notesText": pt::text(notes),
+    "course": *[_type == "course" && references(^._id)][0] {
+      _id,
+      title,
+      "slug": slug.current,
+      level,
+      modules[] {
+        title,
+        lessons[]->{
+          _id,
+          title,
+          "slug": slug.current
+        }
+      }
+    }
+  }
+`);
+
+// Search Video Documents Query (Chapters & Transcripts)
+export const SEARCH_VIDEOS_QUERY = defineQuery(`
+  *[_type == "video" && (
+    chapters[].label match $term ||
+    chunks[].text match $term
+  )] {
+    _id,
+    videoId,
+    url,
+    "matchedChapters": chapters[label match $term] {
+      startSeconds,
+      label
+    },
+    "matchedChunks": chunks[text match $term][0..5] {
+      startSeconds,
+      text
+    }
+  }
+`);
+
+// Full Content Search Hydration Query
+export const GET_ALL_CONTENT_FOR_SEARCH_QUERY = defineQuery(`
+  *[_type == "lesson"] {
+    _id,
+    title,
+    "slug": slug.current,
+    videoUrl,
+    duration,
+    studentCount,
+    keyPoints,
+    proTip,
+    "notesText": pt::text(notes),
+    "course": *[_type == "course" && references(^._id)][0] {
+      _id,
+      title,
+      "slug": slug.current,
+      level,
+      modules[] {
+        title,
+        lessons[]->{
+          _id,
+          title,
+          "slug": slug.current
+        }
+      }
+    }
+  }
+`);
+
