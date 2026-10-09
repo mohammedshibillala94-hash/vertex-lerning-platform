@@ -9,6 +9,7 @@ import {
 } from "@/app/components/Icons";
 import { HeaderSearchInput } from "@/app/components/HeaderSearchInput";
 import { SearchResultCard, SearchResultItem } from "@/app/components/SearchResultCard";
+import { SearchSortSelect } from "@/app/components/SearchSortSelect";
 import { headers } from "next/headers";
 
 interface SearchPageProps {
@@ -166,21 +167,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <label htmlFor="search-sort" className="text-xs font-semibold text-[#64748B]">
                   Sort by:
                 </label>
-                <form method="GET" action="/search" className="inline-block">
-                  <input type="hidden" name="q" value={q} />
-                  <select
-                    id="search-sort"
-                    name="sort"
-                    defaultValue={sort}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onChange={(e: any) => e.target.form?.submit()}
-                    className="h-10 px-3.5 rounded-xl border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A] focus:outline-hidden focus:border-[#EA580C] shadow-2xs cursor-pointer"
-                  >
-                    <option value="relevance">Most relevant</option>
-                    <option value="duration">Shortest duration</option>
-                    <option value="title">Alphabetical</option>
-                  </select>
-                </form>
+                <SearchSortSelect q={q} sort={sort} />
               </div>
             )}
           </div>
