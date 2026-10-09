@@ -94,7 +94,9 @@ export function LessonContentTabs({
               </h3>
               <div className="space-y-3">
                 {keyPoints.map((kp, idx) => {
-                  const text = typeof kp === "string" ? kp : kp.title || kp.description || "";
+                  if (!kp) return null;
+                  const text = typeof kp === "string" ? kp : (kp?.title || kp?.description || "");
+                  if (!text) return null;
                   return (
                     <div key={idx} className="flex items-start gap-3">
                       <CheckCircleFilled
@@ -136,6 +138,7 @@ export function LessonContentTabs({
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {resources.map((res, idx) => {
+                  if (!res) return null;
                   const isGithub =
                     res.type === "github" ||
                     res.title?.toLowerCase().includes("repository") ||
@@ -144,7 +147,7 @@ export function LessonContentTabs({
                   return (
                     <a
                       key={idx}
-                      href={res.url}
+                      href={res.url || "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-white border border-[#E2E8F0] rounded-xl p-4 flex flex-col justify-between gap-3 shadow-2xs hover:border-[#CBD5E1] transition-all group"
@@ -165,7 +168,7 @@ export function LessonContentTabs({
 
                       <div className="space-y-1 min-w-0">
                         <h4 className="font-sans font-bold text-xs sm:text-sm text-[#0F172A] group-hover:text-[#EA580C] transition-colors truncate">
-                          {res.title}
+                          {res.title || "Resource"}
                         </h4>
                         {res.description && (
                           <p className="text-[11px] text-[#64748B] line-clamp-2 leading-snug">
