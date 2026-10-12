@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { ChevronDownIcon } from "./Icons";
 
 interface SearchSortSelectorProps {
   query: string;
@@ -17,21 +18,21 @@ export function SearchSortSelector({ query, currentSort }: SearchSortSelectorPro
   };
 
   return (
-    <div className="flex items-center gap-3 shrink-0">
-      <label htmlFor="search-sort" className="text-xs font-semibold text-[#64748B]">
-        Sort by:
-      </label>
+    <div className="relative inline-flex items-center">
       <select
         id="search-sort"
         name="sort"
         value={currentSort}
         onChange={handleChange}
-        className="h-10 px-3.5 rounded-xl border border-[#E2E8F0] bg-white text-xs font-semibold text-[#0F172A] focus:outline-hidden focus:border-[#EA580C] shadow-2xs cursor-pointer"
+        className="appearance-none h-9 pl-3.5 pr-8 rounded-lg border border-[#E2E8F0] bg-white text-xs sm:text-sm font-medium text-[#0F172A] hover:bg-[#F8FAFC] focus:outline-none focus:border-[#CBD5E1] shadow-2xs cursor-pointer transition-colors"
       >
-        <option value="relevance">Most relevant</option>
+        <option value="relevance">Most Relevant</option>
         <option value="duration">Shortest duration</option>
         <option value="title">Alphabetical</option>
       </select>
+      <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#64748B]">
+        <ChevronDownIcon size={14} />
+      </div>
     </div>
   );
 }

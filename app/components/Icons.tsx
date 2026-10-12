@@ -307,11 +307,62 @@ export const LightbulbOutline: React.FC<IconProps> = ({ size = 24, className = "
   </svg>
 );
 
+export const FolderOutline: React.FC<IconProps> = ({ size = 20, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+  </svg>
+);
+
+export const CheckIcon: React.FC<IconProps> = ({ size = 16, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+export const NextjsBrandIcon: React.FC<IconProps> = ({ size = 18, className = "" }) => (
+  <div className={`w-[${size}px] h-[${size}px] min-w-[${size}px] min-h-[${size}px] rounded-[4px] bg-black text-white flex items-center justify-center font-bold text-[10px] select-none ${className}`}>
+    N
+  </div>
+);
+
+export const ReactBrandIcon: React.FC<IconProps> = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="-11.5 -10.23174 23 20.46348" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <circle cx="0" cy="0" r="2.05" fill="#00D8FF" />
+    <g stroke="#00D8FF" strokeWidth="1" fill="none">
+      <ellipse rx="11" ry="4.2" />
+      <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+      <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+    </g>
+  </svg>
+);
+
+export const NodejsBrandIcon: React.FC<IconProps> = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M16 2L29 9.5V24.5L16 32L3 24.5V9.5L16 2Z" fill="#22C55E" />
+    <path d="M16 4.5L26.5 10.5V22.5L16 28.5L5.5 22.5V10.5L16 4.5Z" fill="#15803D" />
+    <text x="16" y="20" fill="white" fontSize="11" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">JS</text>
+  </svg>
+);
+
+export const JavascriptBrandIcon: React.FC<IconProps> = ({ size = 18, className = "" }) => (
+  <div className={`w-[${size}px] h-[${size}px] min-w-[${size}px] min-h-[${size}px] rounded-[4px] bg-[#F7DF1E] text-black flex items-center justify-center font-bold text-[9px] select-none ${className}`}>
+    JS
+  </div>
+);
+
+export const PythonBrandIcon: React.FC<IconProps> = ({ size = 18, className = "" }) => (
+  <div className={`w-[${size}px] h-[${size}px] min-w-[${size}px] min-h-[${size}px] rounded-[4px] bg-[#3776AB] text-white flex items-center justify-center font-bold text-[9px] select-none ${className}`}>
+    Py
+  </div>
+);
+
 export const GitHubIcon: React.FC<IconProps> = ({ size = 24, className = "", ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} {...props}>
     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
   </svg>
 );
+
+
 
 
 

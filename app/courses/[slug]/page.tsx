@@ -29,6 +29,7 @@ import {
   CourseLearningStartLink,
   FloatingProgressBanner,
 } from "@/app/components/FloatingProgressBanner";
+import { CoursePageAnalyticsTracker } from "@/app/components/AnalyticsTrackers";
 
 interface CoursePageProps {
   params: Promise<{
@@ -72,6 +73,7 @@ interface LearningOutcomeItem {
 
 interface CourseData {
   title: string;
+  slug?: string;
   summary?: string;
   coverImage?: unknown;
   level?: string;
@@ -100,9 +102,17 @@ export default async function CoursePage({ params }: CoursePageProps) {
 
   const formattedTotalDuration = formatDuration(totalDurationSeconds);
   const firstLessonSlug = modules[0]?.lessons?.[0]?.slug || "";
+  const totalLessons = modules.reduce((acc: number, m: ModuleItem) => acc + (m.lessons?.length || 0), 0);
 
   return (
     <div className="min-h-screen bg-[#FAFAFC] text-[#0F172A] flex flex-col justify-between selection:bg-[#FFEEE5] selection:text-[#EA580C] pb-28">
+      <CoursePageAnalyticsTracker
+        courseSlug={course.slug || slug}
+        courseTitle={course.title}
+        level={course.level}
+        moduleCount={moduleCount}
+        totalLessons={totalLessons}
+      />
       {/* TOP NAVIGATION */}
       <header className="w-full border-b border-[#E2E8F0]/60 bg-[#FAFAFC]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">

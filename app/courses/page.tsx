@@ -11,6 +11,7 @@ import {
   DocumentOutline,
   StarIcon,
 } from "@/app/components/Icons";
+import { CatalogPageAnalyticsTracker } from "@/app/components/AnalyticsTrackers";
 
 interface CourseCardItem {
   _id: string;
@@ -27,6 +28,7 @@ export default async function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFC] text-[#0F172A] flex flex-col justify-between selection:bg-[#FFEEE5] selection:text-[#EA580C]">
+      <CatalogPageAnalyticsTracker courseCount={courses.length} />
       {/* TOP NAVIGATION */}
       <header className="w-full border-b border-[#E2E8F0]/60 bg-[#FAFAFC]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between gap-4">

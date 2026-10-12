@@ -9,6 +9,7 @@ import {
   ExternalLinkIcon,
   GitHubIcon,
 } from "./Icons";
+import posthog from "posthog-js";
 
 export interface KeyPointItem {
   title?: string;
@@ -38,13 +39,22 @@ export function LessonContentTabs({
 }: LessonContentTabsProps) {
   const [activeTab, setActiveTab] = useState<"content" | "notes">("content");
 
+  const handleTabClick = (tab: "content" | "notes") => {
+    if (tab !== activeTab) {
+      setActiveTab(tab);
+      posthog.capture("lesson_tab_switched", {
+        tab_name: tab,
+      });
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Tabs Header */}
       <div className="border-b border-[#E2E8F0] flex items-center gap-8">
         <button
           type="button"
-          onClick={() => setActiveTab("content")}
+          onClick={() => handleTabClick("content")}
           className={`pb-3.5 text-sm font-semibold transition-colors relative cursor-pointer ${
             activeTab === "content"
               ? "text-[#EA580C]"
@@ -59,7 +69,7 @@ export function LessonContentTabs({
 
         <button
           type="button"
-          onClick={() => setActiveTab("notes")}
+          onClick={() => handleTabClick("notes")}
           className={`pb-3.5 text-sm font-semibold transition-colors relative cursor-pointer ${
             activeTab === "notes"
               ? "text-[#EA580C]"
@@ -150,6 +160,13 @@ export function LessonContentTabs({
                       href={res.url || "#"}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        posthog.capture("lesson_resource_clicked", {
+                          resource_title: res.title,
+                          resource_url: res.url,
+                          resource_type: res.type || (isGithub ? "github" : "document"),
+                        });
+                      }}
                       className="bg-white border border-[#E2E8F0] rounded-xl p-4 flex flex-col justify-between gap-3 shadow-2xs hover:border-[#CBD5E1] transition-all group"
                     >
                       <div className="flex items-start justify-between gap-2">
