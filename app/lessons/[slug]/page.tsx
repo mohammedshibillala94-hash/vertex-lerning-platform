@@ -12,12 +12,15 @@ import {
   BookmarkOutline,
   ChevronRightOutline,
   ArrowLeftOutline,
-  ArrowRightIcon,
 } from "@/app/components/Icons";
 import { LessonSidebar, ModuleSidebarItem, LessonSidebarItem } from "@/app/components/LessonSidebar";
 import { LessonVideoPlayer } from "@/app/components/LessonVideoPlayer";
 import { LessonContentTabs } from "@/app/components/LessonContentTabs";
 import { formatDuration } from "@/app/utils";
+import {
+  LessonPageAnalyticsTracker,
+  LessonNextButton,
+} from "@/app/components/AnalyticsTrackers";
 
 interface LessonPageProps {
   params: Promise<{
@@ -116,6 +119,14 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
 
   return (
     <div className="min-h-screen bg-[#FAFAFC] text-[#0F172A] flex flex-col justify-between selection:bg-[#FFEEE5] selection:text-[#EA580C]">
+      <LessonPageAnalyticsTracker
+        lessonSlug={lesson.slug}
+        lessonTitle={lesson.title}
+        courseSlug={course?.slug}
+        moduleTitle={currentModuleTitle}
+        hasStartParam={Boolean(startParam)}
+        durationSeconds={lesson.duration}
+      />
       {/* TOP NAVIGATION */}
       <header className="w-full border-b border-[#E2E8F0]/60 bg-[#FAFAFC]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
@@ -278,6 +289,9 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
               videoUrl={lesson.videoUrl}
               title={lesson.title}
               startSeconds={startSeconds}
+              lessonSlug={lesson.slug}
+              courseSlug={course?.slug || ""}
+              durationSeconds={lesson.duration}
             />
 
             {/* Content Tabs (Overview, Key Points, Pro Tip, Resources) */}
@@ -313,18 +327,14 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
               )}
 
               {nextLesson && (
-                <Link
+                <LessonNextButton
                   href={`/lessons/${nextLesson.slug}`}
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#EA580C] hover:bg-[#D97706] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-3 transition-colors shadow-md group"
-                >
-                  <div className="text-right">
-                    <span className="block text-[11px] font-medium opacity-90">
-                      Next Lesson
-                    </span>
-                    <span>{nextLesson.title}</span>
-                  </div>
-                  <ArrowRightIcon size={18} className="group-translate-x-1 transition-transform" />
-                </Link>
+                  lessonTitle={lesson.title}
+                  lessonSlug={lesson.slug}
+                  courseSlug={course?.slug || ""}
+                  nextLessonTitle={nextLesson.title}
+                  durationSeconds={lesson.duration}
+                />
               )}
             </footer>
           </div>
