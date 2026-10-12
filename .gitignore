@@ -13,6 +13,8 @@ node_modules
 # sanity
 .sanity/
 studio/.sanity/
+dist/
+studio/dist/
 gemini_generated_video*.mp4
 
 # testing
