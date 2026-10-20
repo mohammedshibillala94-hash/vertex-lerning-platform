@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { performSearch } from "@/sanity/lib/search";
 import { captureServerEvent } from "@/lib/posthog-server";
 import { auth } from "@clerk/nextjs/server";
+export { VERTEX_SEARCH_SYSTEM_PROMPT } from "@/lib/search-prompt";
 
 export async function POST(request: Request) {
   try {

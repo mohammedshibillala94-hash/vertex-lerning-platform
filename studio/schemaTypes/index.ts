@@ -9,6 +9,7 @@ import { lessonKeyPointType } from "./lessonKeyPoint";
 import { lessonResourceType } from "./lessonResource";
 import { moduleType } from "./module";
 import { videoType } from "./video";
+import { agentContextType } from "./agentContext";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,5 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     learningOutcomeType,
     lessonKeyPointType,
     lessonResourceType,
+    agentContextType,
   ],
 };

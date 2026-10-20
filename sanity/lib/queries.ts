@@ -99,6 +99,14 @@ export const GET_LESSON_BY_SLUG_QUERY = defineQuery(`
       description,
       url
     },
+    "video": *[_type == "video" && (url == ^.videoUrl || videoId in ^.videoUrl)][0] {
+      videoId,
+      url,
+      chapters[] {
+        startSeconds,
+        label
+      }
+    },
     "course": *[_type == "course" && references(^._id)][0] {
       _id,
       title,
@@ -237,6 +245,18 @@ export const GET_ALL_CONTENT_FOR_SEARCH_QUERY = defineQuery(`
     keyPoints,
     proTip,
     "notesText": pt::text(notes),
+    "video": *[_type == "video" && (url == ^.videoUrl || videoId in ^.videoUrl)][0] {
+      videoId,
+      url,
+      chapters[] {
+        startSeconds,
+        label
+      },
+      chunks[0..6] {
+        startSeconds,
+        text
+      }
+    },
     "course": *[_type == "course" && references(^._id)][0] {
       _id,
       title,

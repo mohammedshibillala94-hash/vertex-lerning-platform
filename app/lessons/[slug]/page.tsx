@@ -14,7 +14,7 @@ import {
   ArrowLeftOutline,
 } from "@/app/components/Icons";
 import { LessonSidebar, ModuleSidebarItem, LessonSidebarItem } from "@/app/components/LessonSidebar";
-import { LessonVideoPlayer } from "@/app/components/LessonVideoPlayer";
+import { LessonVideoPlayer, ChapterItem } from "@/app/components/LessonVideoPlayer";
 import { LessonContentTabs } from "@/app/components/LessonContentTabs";
 import { formatDuration } from "@/app/utils";
 import {
@@ -63,6 +63,11 @@ interface LessonData {
   proTip?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   resources?: any[];
+  video?: {
+    videoId?: string;
+    url?: string;
+    chapters?: ChapterItem[];
+  };
   course?: CourseRef;
 }
 
@@ -284,7 +289,7 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
               </div>
             </div>
 
-            {/* Video Player */}
+            {/* Video Player & Interactive Chapters */}
             <LessonVideoPlayer
               videoUrl={lesson.videoUrl}
               title={lesson.title}
@@ -292,6 +297,7 @@ export default async function LessonPage({ params, searchParams }: LessonPagePro
               lessonSlug={lesson.slug}
               courseSlug={course?.slug || ""}
               durationSeconds={lesson.duration}
+              chapters={lesson.video?.chapters || []}
             />
 
             {/* Content Tabs (Overview, Key Points, Pro Tip, Resources) */}
